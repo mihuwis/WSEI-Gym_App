@@ -17,5 +17,25 @@ namespace GymApp.ViewModels
             get => _username;
             set => SetProperty(ref _username, value);
         }
+
+        private string _password;
+        public string Password
+        {
+            get => _password;
+            set => SetProperty(ref _password, value);
+        }
+
+        public IRelayCommand LoginCommand { get; }
+
+        public LoginViewModel()
+        {
+            LoginCommand = new RelayCommand(Login);
+        }
+
+        private void Login()
+        {
+            // TODO - zrobic logikę do loginu 
+            MessageBox.Show("Logged in as " + Username);
+        }
     }
 }
