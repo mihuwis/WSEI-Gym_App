@@ -8,11 +8,16 @@ using CommunityToolkit.Mvvm.Input;
 using System.Windows;
 using GymApp.Views;
 using System.Windows.Input;
+using GymApp.Data;
+using System.Collections.ObjectModel;
+using GymApp.Models;
 
 namespace GymApp.ViewModels
 {
     public class MainViewModel : ObservableObject
     {
+        private readonly GymAppContext _context;
+        public ObservableCollection<WorkoutViewModel> UserWorkouts { get; set; }
         private string _username;
 
         public string Username
@@ -27,10 +32,19 @@ namespace GymApp.ViewModels
 
         public ICommand LogoutCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(string username)
         {
+            Username = username;
+            _context = new GymAppContext();
+            UserWorkouts = new ObservableCollection<WorkoutViewModel>();
+            LoadUserWorkouts();
             LogoutCommand = new RelayCommand(Logout);
             MessageBox.Show("MainViewModel initialized from MV model");
+        }
+
+        private void LoadUserWorkouts()
+        {
+
         }
 
         private void Logout()
