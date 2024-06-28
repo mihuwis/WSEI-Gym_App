@@ -35,10 +35,10 @@ namespace GymApp.ViewModels
 
         private void Logout()
         {
-            // Navigate back to LoginView
-            LoginView loginView = new LoginView();
+            var loginView = new Views.LoginView();
             loginView.Show();
-            Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive).Close();
+            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow = loginView;
         }
     }
 }

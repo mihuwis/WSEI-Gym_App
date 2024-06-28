@@ -46,14 +46,28 @@ namespace GymApp.ViewModels
                 var user = _context.Users.SingleOrDefault(u => u.Username == Username && u.Password == Password);
                 if (user != null)
                 {
-                    MessageBox.Show("Login successful!");
-                    // Navigate to MainView
-                    MainView mainView = new MainView();
-                    var mainViewModel = new MainViewModel { Username = Username };
-                    mainView.DataContext = mainViewModel;
-                    Application.Current.MainWindow = mainView;
-                    mainView.Show();
-                    Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive).Close();
+                    MessageBox.Show("zalogowany!");
+
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+
+                        // close log window 
+                        var loginWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
+                        loginWindow?.Hide();
+
+                        // Navigate to MainView
+                        MainView mainView = new MainView();
+                        var mainViewModel = new MainViewModel { Username = Username };
+                        mainView.DataContext = mainViewModel;
+
+                        // Set Main View as aplication main window
+                        Application.Current.MainWindow = mainView;
+                        mainView.Show();
+
+                        //zamknijj okno logowania po otwarciu main
+                        loginWindow?.Close();
+                    });
+
                 }
                 else
                 {
@@ -62,7 +76,7 @@ namespace GymApp.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error is : {ex.Message}");
+                MessageBox.Show($"Nie działa - wyjatek !! : {ex.Message}");
             }
     
         }

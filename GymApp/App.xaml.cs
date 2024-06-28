@@ -21,6 +21,7 @@ namespace GymApp
             }
 
             var loginView = new Views.LoginView();
+            Application.Current.MainWindow = loginView;
             loginView.Show();
         }
     }
