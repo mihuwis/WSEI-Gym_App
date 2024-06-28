@@ -7,49 +7,64 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows;
 using GymApp.Data;
+using System.Windows.Input;
+using GymApp.Views;
 
 namespace GymApp.ViewModels
 {
     public class LoginViewModel : ObservableObject
     {
         private string _username;
+        private string _password;
+        private readonly GymAppContext _context;
+
         public string Username
         {
             get => _username;
             set => SetProperty(ref _username, value);
         }
 
-        private string _password;
         public string Password
         {
             get => _password;
             set => SetProperty(ref _password, value);
         }
 
-        public IRelayCommand LoginCommand { get; }
+        public ICommand LoginCommand { get; }
 
         public LoginViewModel()
         {
+            _context = new GymAppContext();
             LoginCommand = new RelayCommand(Login);
         }
 
         private void Login()
         {
-            using (var context = new GymAppContext())
+            try
             {
-                var user = context.Users.FirstOrDefault(u => u.Username == Username && u.Password == Password);
+                MessageBox.Show("Attempting login...");
+                var user = _context.Users.SingleOrDefault(u => u.Username == Username && u.Password == Password);
                 if (user != null)
                 {
-                    // Navigate to main view
-                    var mainView = new MainView { DataContext = new MainViewModel { Username = Username } };
+                    MessageBox.Show("Login successful!");
+                    // Navigate to MainView
+                    MainView mainView = new MainView();
+                    var mainViewModel = new MainViewModel { Username = Username };
+                    mainView.DataContext = mainViewModel;
+                    Application.Current.MainWindow = mainView;
                     mainView.Show();
-                    Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive).Close();
+                    Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive).Close();
                 }
                 else
                 {
-                    MessageBox.Show("Invalid credentials");
+                    MessageBox.Show("Invalid username or password.");
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error is : {ex.Message}");
+            }
+    
         }
     }
 }

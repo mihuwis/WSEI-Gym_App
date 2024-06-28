@@ -19,6 +19,7 @@ namespace GymApp
         public MainView()
         {
             InitializeComponent();
+            MessageBox.Show("Main box init main view");
         }
     }
 }

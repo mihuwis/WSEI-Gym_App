@@ -8,13 +8,9 @@
         Title="Login" Height="200" Width="300">
     <Grid>
         <StackPanel>
-            <TextBlock Text="Username" Margin="10,10,10,0"/>
-            <TextBox Text="{Binding Username}" Margin="10,0,10,10"/>
-
-            <TextBlock Text="Password" Margin="10,10,10,0"/>
-            <PasswordBox Password="{Binding Password}" Margin="10,0,10,10"/>
-
-            <Button Content="Login" Command="{Binding LoginCommand}" Margin="10"/>
+            <TextBox Text="{Binding Username}" Margin="10" Width="250"/>
+            <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged" Margin="10" Width="250" />
+            <Button Content="Login" Command="{Binding LoginCommand}" Margin="10" Width="250"/>
         </StackPanel>
     </Grid>
 </Window>
