@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows;
+using GymApp.Data;
 
 namespace GymApp.ViewModels
 {
@@ -34,8 +35,21 @@ namespace GymApp.ViewModels
 
         private void Login()
         {
-            // TODO - zrobic logikę do loginu 
-            MessageBox.Show("Logged in as " + Username);
+            using (var context = new GymAppContext())
+            {
+                var user = context.Users.FirstOrDefault(u => u.Username == Username && u.Password == Password);
+                if (user != null)
+                {
+                    // Navigate to main view
+                    var mainView = new MainView { DataContext = new MainViewModel { Username = Username } };
+                    mainView.Show();
+                    Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.IsActive).Close();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid credentials");
+                }
+            }
         }
     }
 }

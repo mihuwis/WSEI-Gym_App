@@ -8,7 +8,7 @@ namespace GymApp.Models
 {
     public class Workout
     {
-        public int Id { get; set; }
+        public int WorkoutId { get; set; }
         public string Name { get; set; }
         public DateTime StartTime { get; set; }
         public List<Exercise> Exercises { get; set; }
