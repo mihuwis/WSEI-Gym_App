@@ -17,10 +17,10 @@
                 <ListView ItemsSource="{Binding UserWorkouts}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}" Width="100"/>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            <GridViewColumn Header="Start Time" DisplayMemberBinding="{Binding StartTime}" Width="200"/>
                             <GridViewColumn Header="Exercises Count" DisplayMemberBinding="{Binding ExercisesCount}" Width="100"/>
-                            <GridViewColumn Header="Total Weight (kg)" DisplayMemberBinding="{Binding TotalWeight}" Width="150"/>
+                            <GridViewColumn Header="Total Weight" DisplayMemberBinding="{Binding TotalWeight}" Width="150"/>
                         </GridView>
 
                     </ListView.View>

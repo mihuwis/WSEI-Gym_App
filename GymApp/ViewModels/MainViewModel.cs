@@ -32,7 +32,7 @@ namespace GymApp.ViewModels
 
         public ICommand LogoutCommand { get; }
 
-        //DODAnie username do MAIN MODEL VIEW - uzupełnić potem
+        //DODAnie username do MAIN MODEL VIEW - zobaczyć jak będzi edziałało z LoginViewModel
         public MainViewModel(string username)
         {
             Username = username;
@@ -45,9 +45,55 @@ namespace GymApp.ViewModels
 
         private void LoadUserWorkouts()
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == Username);
+            try
+            {
+                // Log to see if the context and Username are set correctly
+                MessageBox.Show("Loading workouts for user: " + Username);
 
+                // Ensure context and Username are not null
+                if (_context == null)
+                {
+                    MessageBox.Show("Context is null!");
+                    return;
+                }
+                if (string.IsNullOrEmpty(Username))
+                {
+                    MessageBox.Show("Username is null or empty!");
+                    return;
+                }
+
+                var user = _context.Users.FirstOrDefault(u => u.Username == Username);
+                if (user != null)
+                {
+                    // Log user details
+                    MessageBox.Show("Found user: " + user.Username);
+
+                    var workouts = _context.Workouts.Where(w => w.UserId == user.UserId).ToList();
+                    foreach (var workout in workouts)
+                    {
+                        UserWorkouts.Add(new WorkoutViewModel
+                        {
+                            StartTime = workout.StartTime,
+                            Name = workout.Name,
+                            ExercisesCount = workout.Exercises.Count(),
+                            TotalWeight = workout.Exercises.Sum(e => e.Weight * e.Repetitions)
+                        });
+                    }
+
+                    // Log success
+                    MessageBox.Show("Loaded workouts successfully.");
+                }
+                else
+                {
+                    MessageBox.Show($"{Username} not found in database.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Exception while loading user workouts: {ex.Message}");
+            }
         }
+
 
         private void Logout()
         {

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using GymApp.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,10 @@ namespace GymApp
     /// </summary>
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(string username)
         {
             InitializeComponent();
+            DataContext = new MainViewModel(username);
             MessageBox.Show("Main box init main view");
         }
     }

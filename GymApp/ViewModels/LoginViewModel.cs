@@ -56,8 +56,8 @@ namespace GymApp.ViewModels
                         loginWindow?.Hide();
 
                         // Navigate to MainView
-                        MainView mainView = new MainView();
-                        var mainViewModel = new MainViewModel { Username = Username };
+                        MainView mainView = new MainView(Username);
+                        var mainViewModel = new MainViewModel(Username);
                         mainView.DataContext = mainViewModel;
 
                         // Set Main View as aplication main window
