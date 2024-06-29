@@ -8,9 +8,9 @@ namespace GymApp.ViewModels
 {
     public class WorkoutViewModel
     {
-        public string Date { get; set; }
+        public DateTime StartTime { get; set; }
         public string Name { get; set; }
-        public string Duration { get; set; }
-        public string TotalWeight { get; set; }
+        public int ExercisesCount { get; set; }
+        public double TotalWeight { get; set; }
     }
 }

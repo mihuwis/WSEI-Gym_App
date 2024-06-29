@@ -32,6 +32,7 @@ namespace GymApp.ViewModels
 
         public ICommand LogoutCommand { get; }
 
+        //DODAnie username do MAIN MODEL VIEW - uzupełnić potem
         public MainViewModel(string username)
         {
             Username = username;
@@ -44,6 +45,7 @@ namespace GymApp.ViewModels
 
         private void LoadUserWorkouts()
         {
+            var user = _context.Users.FirstOrDefault(u => u.Username == Username);
 
         }
 
